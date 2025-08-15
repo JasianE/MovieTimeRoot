@@ -1,0 +1,6 @@
+migrations/
+obj/
+bin/
+*.json
+*sln
+*http
