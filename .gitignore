@@ -1,6 +1,7 @@
 migrations/
 obj/
 bin/
-*.json
-*sln
-*http
+api.http
+api.sln
+appsettings.Development.json
+appsettings.json
