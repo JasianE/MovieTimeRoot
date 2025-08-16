@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using api.Interfaces;
 using api.Services;
+using api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,7 @@ builder.Services.AddAuthentication(options =>
 
 //Dependency injection of repos and services
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
