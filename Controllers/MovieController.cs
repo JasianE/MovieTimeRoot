@@ -7,6 +7,7 @@ using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using api.Mappers;
 using api.DTOs.Movie;
+using RestSharp;
 
 namespace api.Controllers
 {
@@ -19,12 +20,22 @@ namespace api.Controllers
         {
             _movieRepo = movieRepo;
         }
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllMovies()
         {
             List<Movie> Movies = await _movieRepo.GetAll();
             List<GetMovieDTO> MovieDTOs = Movies.Select(movie => MovieMappers.ToGetMovieDto(movie)).ToList();
             return Ok(MovieDTOs);
+        }
+        [HttpPost("add")]
+        public async Task<IActionResult> AddMovieToDB([FromQuery] string MovieTitle)
+        {
+            Movie? movie = await _movieRepo.AddMovieToDB(MovieTitle);
+            if (movie == null)
+            {
+                return BadRequest("Movie already exists.");
+            }
+            return Ok(movie);
         }
     }
 }
