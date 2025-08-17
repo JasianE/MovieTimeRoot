@@ -17,9 +17,22 @@ namespace api.Data
         }
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<UserMovie> UserMovies { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<UserMovie>(entity => entity.HasKey(userMovie => new { userMovie.AppUserId, userMovie.MovieId }));
+
+            builder.Entity<UserMovie>()
+            .HasOne(userMovie => userMovie.AppUser)
+            .WithMany(userMovie => userMovie.UserMovies)
+            .HasForeignKey(userMovie => userMovie.AppUserId);
+
+            builder.Entity<UserMovie>()
+            .HasOne(userMovie => userMovie.Movie)
+            .WithMany(userMovie => userMovie.UserMovies)
+            .HasForeignKey(userMovie => userMovie.MovieId);
+
             List<IdentityRole> roles = new List<IdentityRole>
             {
                 new IdentityRole
