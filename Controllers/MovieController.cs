@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using api.Mappers;
 using api.DTOs.Movie;
 using RestSharp;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers
 {
@@ -21,6 +22,7 @@ namespace api.Controllers
             _movieRepo = movieRepo;
         }
         [HttpGet("all")]
+        [Authorize]
         public async Task<IActionResult> GetAllMovies()
         {
             List<Movie> Movies = await _movieRepo.GetAll();
@@ -28,6 +30,7 @@ namespace api.Controllers
             return Ok(MovieDTOs);
         }
         [HttpPost("add")]
+        [Authorize]
         public async Task<IActionResult> AddMovieToDB([FromQuery] string MovieTitle)
         {
             Movie? movie = await _movieRepo.AddMovieToDB(MovieTitle);
