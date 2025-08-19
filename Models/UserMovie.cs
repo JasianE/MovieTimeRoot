@@ -12,11 +12,11 @@ namespace api.Models
     {
         public string AppUserId { get; set; } //for some reason dotnet id be a string by defualt
         public int MovieId { get; set; }
+        public MovieStatus Status { get; set; }
 
         //Nav properties
         public Movie Movie { get; set; }
         public AppUser AppUser { get; set; }
-        public MovieStatus Status { get; set; }
 
     }
 }

@@ -89,6 +89,7 @@ builder.Services.AddAuthentication(options =>
 //Dependency injection of repos and services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

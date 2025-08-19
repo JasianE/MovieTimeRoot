@@ -85,5 +85,10 @@ namespace api.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Movie> GetMovieByName(string title)
+        {
+            return await _context.Movies.FirstOrDefaultAsync(item => item.Title == title);
+        }
     }
 }
