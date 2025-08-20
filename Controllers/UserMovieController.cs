@@ -42,6 +42,7 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> CreateUserMovie(string movieName, string userName) //name from other user
         {
+            //Add in a recommended by in this field
             AppUser? appUser = await _userManager.FindByNameAsync(userName);
             Movie? movie = await _movieRepo.GetMovieByName(movieName);
             if (movie == null)
@@ -89,7 +90,7 @@ namespace api.Controllers
             //if null return not found, if found then update it and call the movie repo
             var userMovies = await _userMovieRepo.GetUserMovies(appUser);
             Movie? itemOfInterest = userMovies.FirstOrDefault(item => item.Title.ToLower() == MovieTitle.ToLower());
-            
+
             if (itemOfInterest == null)
             {
                 return BadRequest("Movie not found.");

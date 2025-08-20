@@ -90,6 +90,10 @@ namespace api.Controllers
             {
                 return Unauthorized("Username not found and/or password is incorrect");
             }
+            if (result.Succeeded)
+            {
+                Console.WriteLine("YOOOOOOO");
+            }
 
             return Ok(
                 new NewUserDTO
