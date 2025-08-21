@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.DTOs.Movie;
 using api.DTOs.User;
 using api.Interfaces;
 using api.Models;
@@ -71,7 +72,7 @@ namespace api.Controllers
             }
             else
             {
-                List<Movie> moviesOfUser = await _userMovieRepo.GetUserMovies(appUser);
+                List<UserMovieMovie> moviesOfUser = await _userMovieRepo.GetUserMovies(appUser);
                 UserWithUserMovies appUserDTO = new UserWithUserMovies
                 {
                     UserName = appUser.UserName,

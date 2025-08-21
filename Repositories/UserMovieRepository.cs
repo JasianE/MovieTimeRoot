@@ -27,7 +27,7 @@ namespace api.Repositories
             return "Sucessful";
         }
 
-        public async Task<UpdateUserMovieDTO> ChangeMovieStatus(AppUser user, Movie movie, int status)
+        public async Task<UpdateUserMovieDTO> ChangeMovieStatus(AppUser user, UserMovieMovie movie, int status)
         {
             var userMovieInstance = await _context.UserMovies.FirstOrDefaultAsync(item => item.AppUserId == user.Id && item.MovieId == movie.Id);
             var userMoves = await _context.UserMovies.ToListAsync();
@@ -48,16 +48,18 @@ namespace api.Repositories
             };
         }
 
-        public async Task<List<Movie>> GetUserMovies(AppUser user)
+        public async Task<List<UserMovieMovie>> GetUserMovies(AppUser user)
         {
             return await _context.UserMovies.Where(u => u.AppUserId == user.Id)
-            .Select(userMovie => new Movie
+            .Select(userMovie => new UserMovieMovie
             {
                 Title = userMovie.Movie.Title,
                 OverView = userMovie.Movie.OverView,
                 PosterPath = userMovie.Movie.PosterPath,
                 Runtime = userMovie.Movie.Runtime,
-                Id = userMovie.Movie.Id // bruh this was excldued before
+                Id = userMovie.Movie.Id, // bruh this was excldued before,
+                Status = userMovie.Status
+
             }).ToListAsync();
         }
     }

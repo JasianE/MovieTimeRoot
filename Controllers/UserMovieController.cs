@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.DTOs.Movie;
 using api.DTOs.UserMovie;
 using api.Extensions;
 using api.Interfaces;
@@ -90,7 +91,7 @@ namespace api.Controllers
             //Query through all of the appUsers usermovies, and find the one with the same movie title
             //if null return not found, if found then update it and call the movie repo
             var userMovies = await _userMovieRepo.GetUserMovies(appUser);
-            Movie? itemOfInterest = userMovies.FirstOrDefault(item => item.Title.ToLower() == MovieTitle.ToLower());
+            UserMovieMovie? itemOfInterest = userMovies.FirstOrDefault(item => item.Title.ToLower() == MovieTitle.ToLower());
 
             if (itemOfInterest == null)
             {

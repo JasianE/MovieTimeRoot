@@ -11,8 +11,8 @@ namespace api.Interfaces
 {
     public interface IUserMovieRepository
     {
-        Task<List<Movie>> GetUserMovies(AppUser user);
+        Task<List<UserMovieMovie>> GetUserMovies(AppUser user);
         Task<string> AddUserMovie(UserMovie userMovie);
-        Task<UpdateUserMovieDTO> ChangeMovieStatus(AppUser user, Movie movie, int status);
+        Task<UpdateUserMovieDTO> ChangeMovieStatus(AppUser user, UserMovieMovie movie, int status);
     }
 }
