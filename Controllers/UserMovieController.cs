@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.DTOs.UserMovie;
 using api.Extensions;
 using api.Interfaces;
 using api.Models;
@@ -40,11 +41,11 @@ namespace api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateUserMovie(string movieName, string userName) //name from other user
+        public async Task<IActionResult> CreateUserMovie([FromBody] CreateUserMovieDTO movieDto) //name from other user
         {
             //Add in a recommended by in this field
-            AppUser? appUser = await _userManager.FindByNameAsync(userName);
-            Movie? movie = await _movieRepo.GetMovieByName(movieName);
+            AppUser? appUser = await _userManager.FindByNameAsync(movieDto.UserName);
+            Movie? movie = await _movieRepo.GetMovieByName(movieDto.MovieName);
             if (movie == null)
             {
                 return BadRequest("Movie does not exist in DB.");
@@ -56,7 +57,7 @@ namespace api.Controllers
 
             var userMovies = await _userMovieRepo.GetUserMovies(appUser);
 
-            if (userMovies.Any(e => e.Title.ToLower() == movieName.ToLower()))
+            if (userMovies.Any(e => e.Title.ToLower() == movieDto.MovieName.ToLower()))
             {
                 return BadRequest("User already has this movie added.");
             }
@@ -75,7 +76,7 @@ namespace api.Controllers
             }
             else
             {
-                return Ok(result);
+                return Ok(new { message = result });
             }
         }
         [HttpPut("/update")]
