@@ -11,6 +11,7 @@ using RestSharp;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using api.Repositories.Helpers;
+using api.Helpers;
 
 namespace api.Repositories
 {
@@ -76,9 +77,17 @@ namespace api.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Movie>> GetAll()
+        public async Task<List<Movie>> GetAll(QueryObject query)
         {
-            return await _context.Movies.ToListAsync();
+            var movies = _context.Movies.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.Title))
+            {
+                movies = movies.Where(movie => movie.Title.Contains(query.Title));
+            }
+
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await movies.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public Task<Movie> GetMovie()

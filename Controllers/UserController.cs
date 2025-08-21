@@ -61,7 +61,7 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserByID(string id)
         { //only once you get the id can you use this, which will also return the movies the user has, for sepearte page (maybe convoluted)
             AppUser? appUser = await _userManager.FindByIdAsync(id);

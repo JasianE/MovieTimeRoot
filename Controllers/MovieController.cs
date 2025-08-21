@@ -9,6 +9,7 @@ using api.Mappers;
 using api.DTOs.Movie;
 using RestSharp;
 using Microsoft.AspNetCore.Authorization;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -22,10 +23,10 @@ namespace api.Controllers
             _movieRepo = movieRepo;
         }
         [HttpGet("all")]
-        [Authorize]
-        public async Task<IActionResult> GetAllMovies()
+
+        public async Task<IActionResult> GetAllMovies([FromQuery] QueryObject query)
         {
-            List<Movie> Movies = await _movieRepo.GetAll();
+            List<Movie> Movies = await _movieRepo.GetAll(query);
             List<GetMovieDTO> MovieDTOs = Movies.Select(movie => MovieMappers.ToGetMovieDto(movie)).ToList();
             return Ok(MovieDTOs);
         }
