@@ -8,23 +8,26 @@ using Microsoft.IdentityModel.Tokens;
 using api.Interfaces;
 using api.Services;
 using api.Repositories;
+using api.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var allowedOrigins = builder.Configuration["ALLOWED_ORIGINS"]?.Split(',') ?? Array.Empty<string>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173") // your React dev server
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        });
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins(allowedOrigins)
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
+
+
 
 //Adds JWT verification (i did not write this :D)
 builder.Services.AddOpenApi(options =>
@@ -103,6 +106,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+builder.Services.AddScoped<SeedData>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -117,11 +122,42 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowFrontend");
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    var seeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+
+    var retries = 10; //evil docker workaround
+    while (retries > 0)
+    {
+        try
+        {
+            db.Database.Migrate();
+            await seeder.InitializeAsync();
+            break;
+        }
+        catch (Exception ex)
+        {
+            retries--;
+            await Task.Delay(5000); // wait 5 seconds before retry
+        }
+    }
+
+    if (retries == 0)
+    {
+        Console.WriteLine("Could not connect to database. Exiting...");
+        Environment.Exit(1);
+    }
+}
+
+
+
 app.Run();
 

@@ -31,7 +31,7 @@ namespace api.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             //Add pagination
-            
+
             List<AppUser> users = await _userManager.Users.ToListAsync();
             var DTOs = users.Select(user => new UserDTO
             {

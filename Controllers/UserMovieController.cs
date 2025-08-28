@@ -80,10 +80,10 @@ namespace api.Controllers
                 return Ok(new { message = result });
             }
         }
-        [HttpPut("/update")]
+        [HttpPut("update/{MovieTitle}")]
         [Authorize]
 
-        public async Task<IActionResult> ChangeMovieStatus(string MovieTitle, [FromRoute] int status)
+        public async Task<IActionResult> ChangeMovieStatus([FromRoute] string MovieTitle)
         {
             string userName = User.GetUserName(); // we get the username from the user object that exists due to controller base logged in
             AppUser? appUser = await _userManager.FindByNameAsync(userName);
@@ -99,7 +99,7 @@ namespace api.Controllers
             }
             else
             {
-                var result = await _userMovieRepo.ChangeMovieStatus(appUser, itemOfInterest, status);
+                var result = await _userMovieRepo.ChangeMovieStatus(appUser, itemOfInterest, 1);
                 return Ok(result);
             }
         }
