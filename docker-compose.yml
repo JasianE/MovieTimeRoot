@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"   # localhost:3000 -> nginx (serving React)
+    depends_on:
+      - backend
+
+  backend:
+    build: ./MovieTime-Backend/api
+    ports:
+      - "5000:8080" # localhost:5000 -> .NET API
+    environment:
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - ConnectionStrings__DefaultConnection=Server=db;Database=AppDb;User=sa;Password=Your_password123;TrustServerCertificate=True
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
