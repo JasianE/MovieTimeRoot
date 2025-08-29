@@ -1,7 +1,0 @@
-migrations/
-obj/
-bin/
-api.http
-api.sln
-appsettings.Development.json
-appsettings.json
