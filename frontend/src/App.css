@@ -1,0 +1,437 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.recommended-container {
+  display: flex;
+  gap: 16px; /* space between cards */
+  overflow-x: auto; /* enable horizontal scroll */
+  padding: 16px;
+  scroll-behavior: smooth; /* smooth scrolling when using JS or scrollbar */
+  
+  /* Optional: hide vertical scrollbar */
+  scrollbar-width: thin; /* Firefox */
+}
+
+.recommended-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.recommended-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 4px;
+}
+
+
+.user-card {
+  display: inline-block;
+  padding: 12px 20px;
+  margin: 8px;
+  background-color: #3d3d3d; /* light gray */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+  user-select: none; /* prevents text selection on click */
+}
+
+.user-card:hover {
+  background-color: #727272;
+  transform: translateY(-2px); /* slight lift effect */
+}
+
+.user-card:active {
+  background-color: #d0d0d0;
+  transform: translateY(0); /* press effect */
+}
+
+/* Form container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 300px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #2b2b2b; /* slightly lighter than background for contrast */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Input fields */
+.form-container input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-container input::placeholder {
+  color: #aaa; /* lighter placeholder */
+}
+
+/* Focus effect */
+.form-container input:focus {
+  outline: none;
+  border-color: #4f9ef8; /* accent color (blue highlight) */
+  box-shadow: 0 0 6px rgba(79, 158, 248, 0.6);
+}
+
+/* Buttons */
+.form-container button {
+  padding: 0.75rem 1rem;
+  background-color: #4f9ef8;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.form-container button:hover {
+  background-color: #3c82d6;
+}
+
+.dashboard {
+  padding: 2rem;
+  background-color: #1c1c1c;
+  color: white;
+  min-height: 100vh;
+}
+
+/* Row title */
+.row-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+/* Scrollable row container */
+.movie-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar (optional) */
+.movie-row::-webkit-scrollbar {
+  display: none;
+}
+
+.movie-card {
+  background-color: transparent;
+  width: 180px;
+  height: 280px;
+  perspective: 1000px;
+}
+
+.movie-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.movie-card:hover .movie-card-inner {
+  transform: rotateY(180deg);
+}
+
+.movie-card-front,
+.movie-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;   /* 🔥 makes front & back same size */
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* 🔥 keeps padding inside size */
+}
+
+/* Front (poster) */
+.movie-card-front img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.movie-card-front h3 {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+
+/* Back (overview + button) */
+.movie-card-back {
+  background-color: #2b2b2b;
+  color: #fff;
+  transform: rotateY(180deg);
+  padding: 1rem;
+  text-align: center;
+  overflow-y: auto; /* 🔥 scroll instead of overflow */
+}
+
+.movie-card-back h3 {
+  margin-bottom: 8px;
+}
+
+.movie-card-back p {
+  font-size: 0.85rem;
+  line-height: 1.3;
+  max-height: 100px; /* 🔥 keeps description contained */
+  overflow-y: auto;
+}
+
+.movie-card-back button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff4444;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.movie-card-back button:hover {
+  background-color: #ff6666;
+}
+
+/* "Other Users" button */
+.other-users-btn {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: #4f9ef8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.other-users-btn:hover {
+  background-color: #3c82d6;
+}
+
+.users-button {
+  display: block;
+  margin: 30px auto;
+  padding: 12px 28px;
+  background: #3b82f6; /* soft blue */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.users-button:hover {
+  background: #2563eb; /* slightly darker blue */
+  transform: translateY(-2px);
+}
+
+.users-button:active {
+  transform: translateY(0px);
+}
+.go-back-button {
+  position: fixed; /* stays at top-left even on scroll */
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  background-color: #3b82f6; /* soft blue accent */
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+  transition: background 0.2s, transform 0.2s;
+  z-index: 1000; /* stays above other content */
+}
+
+.go-back-button:hover {
+  background-color: #2563eb; /* slightly darker blue on hover */
+  transform: translateY(-2px);
+}
+
+.go-back-button:active {
+  transform: translateY(0);
+}
+
+/* Page container */
+.other-user-page {
+  padding: 2rem;
+  background-color: #1c1c1c;
+  color: white;
+  min-height: 100vh;
+}
+
+/* Username at top */
+.other-user-username {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Container for search + button */
+.add-movie-section {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: center;     /* centers vertically */
+  gap: 0.8rem;             /* space between input and button */
+  flex-wrap: wrap;         /* wrap on smaller screens */
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 500px;        /* keeps section from being too wide */
+  margin-left: auto;       /* center section on page */
+  margin-right: auto;
+}
+
+/* Search input */
+.add-movie-section input {
+  flex: 1 1 auto;          /* grow to fill available space */
+  min-width: 180px;
+  max-width: 350px;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #2b2b2b;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Submit button */
+.add-movie-section button {
+  flex: 0 0 auto;          /* keep natural button width */
+  padding: 0.6rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #4f9ef8;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.add-movie-section button:hover {
+  background-color: #3c82d6;
+  transform: translateY(-2px);
+}
+
+/* Optional spacing for result messages */
+.result-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #f0f0f0;
+}
+
+/* Dropdown container */
+.search-dropdown {
+  position: relative;
+  width: 220px; /* match input width */
+}
+
+/* The dropdown list */
+.search-dropdown ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 180px; /* scrollable if too many options */
+  overflow-y: auto;
+  background-color: #2b2b2b; /* dark background */
+  color: white;
+  border: 1px solid #444;
+  border-radius: 8px;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  z-index: 1000; /* stays on top of other elements */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Each dropdown item */
+.search-dropdown li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Hover effect */
+.search-dropdown li:hover {
+  background-color: #4f9ef8; /* highlight color */
+  color: white;
+}
+
+/* Optional: indicate selected item */
+.search-dropdown li.selected {
+  background-color: #2563eb;
+  font-weight: 600;
+}
