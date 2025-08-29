@@ -28,7 +28,7 @@ namespace api.Seed
             {
                 new Movie { Title = "The Shawshank Redemption", OverView = "Imprisoned...", PosterPath = "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg", Runtime = "142 min" },
                 new Movie { Title = "The Godfather", OverView = "The aging patriarch...", PosterPath = "/rPdtLWNsZmAtoZl9PK7S2wE3qiS.jpg", Runtime = "175 min" },
-                // ... add more movies here, ideally top 100
+                
             };
 
             _context.Movies.AddRange(movies);

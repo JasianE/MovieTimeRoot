@@ -9,11 +9,11 @@ services:
       - backend
 
   backend:
-    build: ./MovieTime-Backend/api
+    build: ./backend
     ports:
       - "5000:8080" # localhost:5000 -> .NET API
     environment:
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - ALLOWED_ORIGINS=http://localhost:3000
       - ConnectionStrings__DefaultConnection=Server=db;Database=AppDb;User=sa;Password=Your_password123;TrustServerCertificate=True
     depends_on:
       - db
